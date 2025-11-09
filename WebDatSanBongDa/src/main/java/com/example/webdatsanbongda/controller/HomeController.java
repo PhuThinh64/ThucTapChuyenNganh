@@ -11,42 +11,45 @@ public class HomeController {
     }
     @GetMapping("/booking")
     public String booking(){
-        return "booking";
+        return "home/booking";
     }
     @GetMapping("/checkout")
     public String checkout(){
-        return "checkout";
+        return "home/checkout";
     }
     @GetMapping("/contact")
     public String contact(){
-        return "contact";
+        return "home/contact";
     }
     @GetMapping("/venue-detail")
     public String venueDetail(){
-        return "venue-detail";
+        return "home/venue-detail";
     }
     @GetMapping("/venues")
     public String venues(){
-        return "venues";
+        return "home/venues";
     }
-    @GetMapping("/account")
+    @GetMapping("home/account")
     public String account(){
-        return "account";
+        return "home/account";
     }
     @GetMapping("/about")
     public String about(){
-        return "about";
+        return "home/about";
     }
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "home/login";
     }
     @GetMapping("/forgot-password")
     public String forgotPassword(){
-        return "forgot-password";
+        return "home/forgot-password";
     }
     @GetMapping("/register")
     public String register(){
-        return "register";
+        return "home/register";
     }
+
+
+
 }

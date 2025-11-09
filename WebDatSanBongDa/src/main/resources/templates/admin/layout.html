@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SânBóng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="bg-gray-50">
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold text-lg">⚽</span>
+            </div>
+            <span class="font-bold text-xl text-gray-900">SânBóng Admin</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="toggleAdminMenu()" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span id="adminName">Quản trị viên</span>
+            </button>
+            <a th:href="@{/}" class="text-gray-600 hover:text-gray-900 transition" title="Về trang chủ">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 15l12-12m0 0l-12 12"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Admin Menu Dropdown -->
+    <div id="adminMenu" class="hidden absolute top-full right-4 bg-white border border-gray-200 rounded-lg shadow-lg mt-2">
+        <a href="dashboard.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Dashboard</a>
+        <a href="venues.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Quản lý sân bóng</a>
+        <a href="users.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Quản lý người dùng</a>
+        <button onclick="handleAdminLogout()" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">Đăng xuất</button>
+    </div>
+</nav>
+
+<!-- Sidebar + Main Content -->
+<div class="flex pt-20">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 min-h-screen">
+        <nav class="p-6 space-y-2">
+            <a th:href="@{/admin/dashboard}" class="block px-4 py-2.5 bg-blue-50 text-blue-600 font-semibold rounded-lg">
+                <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 4l4 2m-8-2l4-2"></path>
+                </svg>
+                Dashboard
+            </a>
+            <a th:href="@{/admin/venues}" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
+                <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+                Quản lý sân bóng
+            </a>
+            <a th:href="@{/admin/users}" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
+                <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292m7-7.75A7 7 0 105 12m12 0a7 7 0 11-14 0"></path>
+                </svg>
+                Quản lý người dùng
+            </a>
+            <a th:href="@{/admin/bookings}" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
+                <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                Quản lý đặt sân
+            </a>
+        </nav>
+    </aside>
+    <div layout:fragment="main-content-admin">
+
+    </div>
+
+</div>
+<script th:src="@{/js/admin.js}" defer></script>
+
+</body>
+</html>
