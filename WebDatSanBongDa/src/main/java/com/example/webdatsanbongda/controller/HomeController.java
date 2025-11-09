@@ -49,7 +49,10 @@ public class HomeController {
     public String register(){
         return "home/register";
     }
-
+    @GetMapping("/cart")
+    public String cart(){
+        return "home/cart";
+    }
 
 
 }
