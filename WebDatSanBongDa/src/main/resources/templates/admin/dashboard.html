@@ -7,8 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - SânBóng</title>
-    <script th:src="@{/https://cdn.tailwindcss.com}"></script>
-    <link rel="stylesheet" th:href="@{/../css/style.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="bg-gray-50">
 
@@ -139,62 +139,9 @@
 
     </div>
 
-    <script>
-        // Define helper functions locally
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 p-4 rounded-lg text-white ${
-                type === 'success' ? 'bg-green-500' :
-                    type === 'error' ? 'bg-red-500' :
-                        'bg-blue-500'
-            } z-[9999] max-w-sm`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
+    <th:block layout:fragment="page-scripts-admin">
+        <script th:src="@{/js/adminjs/dashboard.js}"></script>
+    </th:block>
 
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
-
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(value);
-        }
-    </script>
-    <script>
-        function waitForAdminFunctions() {
-            if (typeof checkAdminAuth === 'undefined') {
-                setTimeout(waitForAdminFunctions, 100);
-                return;
-            }
-            checkAdminAuth();
-            loadDashboardData();
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            waitForAdminFunctions();
-        });
-
-        function loadDashboardData() {
-            // Load venue data from localStorage
-            const venues = JSON.parse(localStorage.getItem('venues') || '[]');
-            document.getElementById('totalVenues').textContent = venues.length || 150;
-        }
-
-        function toggleAdminMenu() {
-            const menu = document.getElementById('adminMenu');
-            menu.classList.toggle('hidden');
-        }
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById('adminMenu');
-            if (!event.target.closest('button') && !menu.classList.contains('hidden')) {
-                menu.classList.add('hidden');
-            }
-        });
-    </script>
 </body>
 </html>

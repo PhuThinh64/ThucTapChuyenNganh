@@ -2,58 +2,12 @@
 let currentEditingVenueId = null;
 let currentViewingBookingId = null;
 
-// Owner Authentication
-function checkOwnerAuth() {
-    const currentOwner = sessionStorage.getItem('currentOwner');
-    const rememberOwner = localStorage.getItem('rememberOwner');
-
-    if (!currentOwner && !rememberOwner) {
-        window.location.href = 'login.html';
-        return;
-    }
-
-    const owner = currentOwner ? JSON.parse(currentOwner) : JSON.parse(rememberOwner);
-    const ownerNameElement = document.getElementById('ownerName');
-    if (ownerNameElement) {
-        ownerNameElement.textContent = owner.name || 'Chủ Sân';
-    }
-}
-
-function handleOwnerLogin(event) {
-    event.preventDefault();
-    const email = document.getElementById('ownerEmail').value;
-    const password = document.getElementById('ownerPassword').value;
-    const rememberMe = document.getElementById('rememberMe').checked;
-
-    if (email === 'owner@sanbong.com' && password === 'owner123') {
-        const ownerUser = {
-            id: 'owner-1',
-            name: 'Chủ Sân',
-            email: email,
-            role: 'owner',
-            loginTime: new Date().toISOString()
-        };
-
-        sessionStorage.setItem('currentOwner', JSON.stringify(ownerUser));
-
-        if (rememberMe) {
-            localStorage.setItem('rememberOwner', JSON.stringify(ownerUser));
-        }
-
-        showNotification('Đăng nhập thành công!', 'success');
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1000);
-    } else {
-        showNotification('Email hoặc mật khẩu không đúng', 'error');
-    }
-}
-
 function handleOwnerLogout() {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        sessionStorage.removeItem('currentOwner');
-        localStorage.removeItem('rememberOwner');
-        window.location.href = 'login.html';
+        // sessionStorage.removeItem('currentOwner');
+        // localStorage.removeItem('rememberOwner');
+        alert('Đăng xuất thành công!');
+        window.location.href = '/login';
     }
 }
 
@@ -84,7 +38,7 @@ function formatCurrency(value) {
 // Get owner's venues
 function getOwnerVenues() {
     const allVenues = JSON.parse(localStorage.getItem('venues') || '[]');
-    return allVenues.filter(v => v.ownerId === 'owner-1');
+    return allVenues;
 }
 
 // Venue Management
@@ -223,9 +177,9 @@ function confirmDelete() {
 // Bookings Management
 function loadOwnerBookings() {
     const allBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-    const ownerVenues = getOwnerVenues();
-    const ownerVenueIds = ownerVenues.map(v => v.id);
-    return allBookings.filter(b => ownerVenueIds.includes(b.venueId));
+    // const ownerVenues = getOwnerVenues();
+    // const ownerVenueIds = ownerVenues.map(v => v.id);
+    return allBookings;
 }
 
 function getBookingStats() {
@@ -409,9 +363,7 @@ function filterOwnerBookings() {
 }
 
 // Export Functions
-window.checkOwnerAuth = checkOwnerAuth;
-window.handleOwnerLogin = handleOwnerLogin;
-window.handleOwnerLogout = handleOwnerLogout;
+
 window.showNotification = showNotification;
 window.formatCurrency = formatCurrency;
 window.getOwnerVenues = getOwnerVenues;

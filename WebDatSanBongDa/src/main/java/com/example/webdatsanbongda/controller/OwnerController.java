@@ -5,24 +5,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/owner")
+public class OwnerController {
 
     @GetMapping({"", "/dashboard"})
     public String viewDashboard() {
-        return "admin/dashboard";
+        return "owner/dashboard";
     }
     @GetMapping("/bookings")
     public String viewBookings() {
-        return "admin/bookings";
+        return "owner/bookings";
     }
-    @GetMapping("/users")
+    @GetMapping("/revenue")
     public String viewUsers() {
-        return "admin/users";
+        return "owner/revenue";
     }
     @GetMapping("/venues")
     public String viewVenues() {
-        return "admin/venues";
+        return "owner/venues";
     }
 
 

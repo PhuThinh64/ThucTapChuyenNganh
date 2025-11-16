@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:layout="https://www.ultraq.nz/thymeleaf/layout"
+      layout:decorate="~{owner/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo Doanh Thu - Chủ Sân</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-gray-50">
+
+    <div layout:fragment="main-content-owner">
+        <!-- Main Content -->
+        <div class="ml-64 min-h-screen">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+                <div class="px-8 py-4 flex items-center justify-between">
+                    <h1 class="text-2xl font-bold text-gray-900">Báo cáo doanh thu</h1>
+                    <div class="flex items-center gap-4">
+                        <button onclick="exportReport()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition">
+                            Xuất báo cáo
+                        </button>
+                        <div class="text-right">
+                            <p class="text-sm font-medium text-gray-900" id="ownerName">Chủ Sân</p>
+                            <p class="text-xs text-gray-600">Chủ sân bóng</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="p-8">
+                <!-- Revenue Summary -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Total Revenue -->
+                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm font-medium">Tổng doanh thu</p>
+                                <p class="text-3xl font-bold text-green-600 mt-2" id="totalRevenueDisplay">0 ₫</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Confirmed Bookings -->
+                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm font-medium">Đặt sân xác nhận</p>
+                                <p class="text-3xl font-bold text-blue-600 mt-2" id="confirmedBookingsDisplay">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Month Revenue -->
+                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm font-medium">Doanh thu tháng này</p>
+                                <p class="text-3xl font-bold text-purple-600 mt-2" id="monthRevenueDisplay">0 ₫</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Revenue Chart -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+                    <div class="mb-6">
+                        <h2 class="text-lg font-bold text-gray-900">Doanh thu theo tháng</h2>
+                        <p class="text-sm text-gray-600 mt-1">Biểu đồ doanh thu 12 tháng gần nhất</p>
+                    </div>
+                    <div id="monthlyChartContainer" class="h-64 flex items-end justify-between gap-2 px-4 py-8 bg-gray-50 rounded-lg">
+                        <div class="text-center text-gray-600 text-sm">Đang tải dữ liệu...</div>
+                    </div>
+                </div>
+
+                <!-- Bookings Table -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-lg font-bold text-gray-900">Danh sách đặt sân (đã xác nhận)</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                            <tr class="border-b border-gray-200 bg-gray-50">
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Khách hàng</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Sân bóng</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Ngày chơi</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Thời lượng</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Giá tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bookingsTableBody">
+                            <tr class="border-b border-gray-200">
+                                <td colspan="5" class="px-6 py-12 text-center text-gray-600 text-sm">Không có dữ liệu</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <th:block layout:fragment="page-scripts-owner">
+        <script th:src="@{/js/ownerjs/revenue.js}"></script>
+    </th:block>
+
+</body>
+</html>

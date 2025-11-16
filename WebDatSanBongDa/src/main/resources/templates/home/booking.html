@@ -48,7 +48,7 @@
                                 <p class="text-gray-600">Quận 1, TP.HCM</p>
                                 <p class="text-gray-600 mt-2">📅 <strong>10/12/2024</strong> | ⏰ <strong>18:00 - 20:00</strong></p>
                             </div>
-                            <a href="venue-detail.html" class="text-blue-600 hover:text-blue-700 font-semibold">Thay đổi</a>
+                            <a th:href="@{/venue-detail}" class="text-blue-600 hover:text-blue-700 font-semibold">Thay đổi</a>
                         </div>
                     </div>
 
@@ -147,21 +147,10 @@
         </div>
     </section>
 </div>
-    <script th:src="@{js/main.js}"></script>
-    <script>
-        function goToCheckout(e) {
-            e.preventDefault();
-            // Store booking data in session storage
-            const bookingData = {
-                fullName: document.getElementById('fullName').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                playerCount: document.getElementById('playerCount').value,
-                notes: document.getElementById('notes').value
-            };
-            sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
-            window.location.href = 'checkout.html';
-        }
-    </script>
+
+<th:block layout:fragment="page-scripts">
+    <script th:src="@{/js/homejs/booking.js}"></script>
+</th:block>
+
 </body>
 </html>

@@ -39,10 +39,12 @@
 
     <!-- Admin Menu Dropdown -->
     <div id="adminMenu" class="hidden absolute top-full right-4 bg-white border border-gray-200 rounded-lg shadow-lg mt-2">
-        <a href="dashboard.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Dashboard</a>
-        <a href="venues.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Quản lý sân bóng</a>
-        <a href="users.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Quản lý người dùng</a>
+        <a th:href="@{/admin/dashboard}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Dashboard</a>
+        <a th:href="@{/admin/venues}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Quản lý sân bóng</a>
+        <a th:href="@{/admin/users}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b">Quản lý người dùng</a>
         <button onclick="handleAdminLogout()" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">Đăng xuất</button>
+
+
     </div>
 </nav>
 
@@ -51,25 +53,25 @@
     <!-- Sidebar -->
     <aside class="w-64 bg-white border-r border-gray-200 min-h-screen">
         <nav class="p-6 space-y-2">
-            <a th:href="@{/admin/dashboard}" class="block px-4 py-2.5 bg-blue-50 text-blue-600 font-semibold rounded-lg">
+            <a th:href="@{/admin/dashboard}" class="nav-item block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
                 <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 4l4 2m-8-2l4-2"></path>
                 </svg>
                 Dashboard
             </a>
-            <a th:href="@{/admin/venues}" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
+            <a th:href="@{/admin/venues}" class="nav-item block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
                 <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                 </svg>
                 Quản lý sân bóng
             </a>
-            <a th:href="@{/admin/users}" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
+            <a th:href="@{/admin/users}" class="nav-item block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
                 <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292m7-7.75A7 7 0 105 12m12 0a7 7 0 11-14 0"></path>
                 </svg>
                 Quản lý người dùng
             </a>
-            <a th:href="@{/admin/bookings}" class="block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
+            <a th:href="@{/admin/bookings}" class="nav-item block px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition">
                 <svg class="w-5 h-5 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
@@ -82,7 +84,76 @@
     </div>
 
 </div>
-<script th:src="@{/js/admin.js}" defer></script>
 
+<script>
+    // Xử lý menu dropdown
+    function toggleAdminMenu() {
+        const menu = document.getElementById('adminMenu');
+        if (menu) {
+            menu.classList.toggle('hidden');
+        }
+    }
+
+    // Xử lý đóng menu khi nhấp ra ngoài (Dựa trên logic ban đầu của bạn)
+    document.addEventListener('click', function(event) {
+        const menu = document.getElementById('adminMenu');
+        const adminButton = document.querySelector('[onclick="toggleAdminMenu()"]');
+
+        // Chỉ đóng menu nếu nó đang mở và click không nằm trong menu hoặc nút kích hoạt
+        if (menu && !menu.classList.contains('hidden')) {
+            const isClickInsideMenu = menu.contains(event.target);
+            const isClickOnButton = adminButton && adminButton.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnButton) {
+                menu.classList.add('hidden');
+            }
+        }
+    });
+
+    // Hàm giả định cho Đăng xuất (handleAdminLogout)
+    function handleAdminLogout() {
+        if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+
+            alert('Đăng xuất thành công!');
+            window.location.href = '/login';
+        }
+    }
+
+    function highlightActiveNav() {
+        // Lấy đường dẫn hiện tại, loại bỏ slash cuối nếu có (để so sánh chính xác hơn)
+        const path = window.location.pathname.replace(/\/$/, "");
+
+        // Lớp CSS cho trạng thái Active
+        const ACTIVE_CLASSES = ['bg-blue-50', 'text-blue-600', 'font-semibold'];
+        // Lớp CSS cho trạng thái Default (Không Active)
+        const DEFAULT_CLASSES = ['text-gray-700', 'hover:bg-gray-50'];
+
+        document.querySelectorAll('.nav-item').forEach(link => {
+            // Lấy href của link và loại bỏ slash cuối nếu có
+            const linkPath = link.getAttribute('href').replace(/\/$/, "");
+
+            // 1. Reset trạng thái: Loại bỏ ACTIVE, thêm DEFAULT
+            link.classList.remove(...ACTIVE_CLASSES);
+            link.classList.add(...DEFAULT_CLASSES);
+
+            // 2. So sánh đường dẫn:
+            // Đảm bảo so sánh KHỚP HOÀN TOÀN để tránh việc /admin/users tô xanh cả /admin
+            if (path === linkPath) {
+
+                // 3. Áp dụng trạng thái ACTIVE
+                link.classList.add(...ACTIVE_CLASSES);
+                // Quan trọng: Loại bỏ trạng thái DEFAULT để màu xanh không bị ghi đè
+                link.classList.remove(...DEFAULT_CLASSES);
+            }
+        });
+    }
+
+    // Chạy hàm này khi DOM đã tải xong (hoặc ngay sau khi định nghĩa)
+    // Vì script này nằm trong <body> và sau các element, ta có thể gọi nó ngay.
+    document.addEventListener('DOMContentLoaded', highlightActiveNav);
+</script>
+
+<script th:src="@{/js/adminjs/admin.js}" defer></script>
+<th:block layout:fragment="page-scripts-admin"></th:block>
 </body>
 </html>

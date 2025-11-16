@@ -162,14 +162,10 @@
 
     </div>
 
-    <script th:src="@{js/main.js}"></script>
-    <script>
-        function submitContact(e) {
-            e.preventDefault();
-            const name = document.getElementById('contactName').value;
-            alert('Cảm ơn ' + name + '! Tin nhắn của bạn đã được gửi. Chúng tôi sẽ phản hồi sớm nhất!');
-            document.getElementById('contactForm').reset();
-        }
-    </script>
+    <th:block layout:fragment="page-scripts">
+        <script th:src="@{/js/homejs/contact.js}"></script>
+    </th:block>
+
+
 </body>
 </html>
