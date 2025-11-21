@@ -29,11 +29,16 @@
                 </svg>
                 <span id="adminName">Quản trị viên</span>
             </button>
-            <a th:href="@{/}" class="text-gray-600 hover:text-gray-900 transition" title="Về trang chủ">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 15l12-12m0 0l-12 12"></path>
-                </svg>
-            </a>
+<!--            <a  class="text-gray-600 hover:text-gray-900 transition" title="Về trang chủ">-->
+<!--                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
+<!--                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 15l12-12m0 0l-12 12"></path>-->
+<!--                </svg>-->
+<!--               -->
+<!--            </a>-->
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-priamry">Logout</button>
+            </form>
+
         </div>
     </div>
 
