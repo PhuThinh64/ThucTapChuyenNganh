@@ -15,7 +15,7 @@ public class SecurityConfig {
         UserDetails thinh = User.builder()
                 .username("thinh")
                 .password("{noop}123")
-                .roles("EMPLOYEE")
+                .roles("EMPLOYEE","ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(thinh);
 
@@ -25,6 +25,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer->
                 configurer
                         .requestMatchers("/css/**", "/js/**", "/vendor/**", "/images/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
                         .requestMatchers("/login2").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(

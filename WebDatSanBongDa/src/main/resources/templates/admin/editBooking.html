@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa đặt sân</title>
+</head>
+<body>
+<div layout:fragment="main-content-admin">
+    <main class="flex-1 p-8">
+        <div class="bg-white rounded-lg shadow p-6 max-w-lg mx-auto">
+            <h1 class="text-2xl font-bold mb-6">Chỉnh sửa Booking</h1>
+
+            <form th:action="@{/admin/bookings/edit}" th:object="${booking}" method="post" class="space-y-4">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Người đặt</label>
+                    <input type="text" th:field="*{userName}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Sân bóng</label>
+                    <input type="text" th:field="*{venueName}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Ngày/Giờ</label>
+                    <input type="datetime-local" th:field="*{bookingTime}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Giá</label>
+                    <input type="number" step="1000" th:field="*{price}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Trạng thái</label>
+                    <select th:field="*{status}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="pending">Chờ xác nhận</option>
+                        <option value="confirmed">Xác nhận</option>
+                        <option value="cancelled">Đã hủy</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-between mt-6">
+                    <a href="/admin/bookings" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Hủy</a>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Lưu</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

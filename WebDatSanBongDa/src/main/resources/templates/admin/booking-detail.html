@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="details">
+    <p>Khách hàng: <span th:text="${booking.customerName}"></span></p>
+    <p>Sân: <span th:text="${booking.fieldName}"></span></p>
+    <p>Thời gian: <span th:text="${booking.bookingTime}"></span></p>
+    <p>Trạng thái: <span th:text="${booking.status}"></span></p>
+</div>
+</body>
+</html>
